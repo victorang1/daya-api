@@ -5,9 +5,11 @@ exports.getPostsByPlaceId = async (req, res) => {
     try {
         const rawQuery = `
             SELECT 
+                p.post_id,
                 p.description,
                 p.username,
                 p.created_at,
+                p.user_avatar,
                 COUNT(f.favorite_id) as totalLike,
                 CASE WHEN EXISTS(SELECT * FROM favorite WHERE user_id = ? AND post_id = p.post_id)
                     THEN 1
@@ -36,8 +38,8 @@ exports.getPostsByPlaceId = async (req, res) => {
 exports.createPost = async (req, res) => {
 
     try {
-        const rawQuery = 'INSERT INTO `post`(`post_id`, `place_id`, `description`, `username`, `user_id`) VALUES (?, ?, ?, ?, ?)';
-        await db.query(rawQuery, [req.body.postId, req.body.placeId, req.body.description, req.body.username, req.body.user_id]);
+        const rawQuery = 'INSERT INTO `post` (`place_id`, `description`, `username`, `user_id`) VALUES (?, ?, ?, ?)';
+        await db.query(rawQuery, [req.params.placeId, req.body.description, req.body.username, req.body.userId]);
         res.status(200).send({
             status: 200,
             message: 'Post success',

@@ -8,7 +8,7 @@ exports.getPlaceById = async (req, res) => {
         res.status(200).send({
             status: 200,
             message: '',
-            data: rows.length !== 0 ? rows[0] : {}
+            data: rows.length !== 0 ? rows[0] : null
         });
     } catch (ex) {
         res.status(500).send({
