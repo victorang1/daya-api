@@ -39,16 +39,16 @@ exports.createPost = async (req, res) => {
 
     try {
         const rawQuery = 'INSERT INTO `post` (`place_id`, `description`, `username`, `user_id`, `user_avatar`) VALUES (?, ?, ?, ?, ?)';
-        await db.query(rawQuery, [req.params.placeId, req.body.description, req.body.username, req.body.userId, req.body.userAvatar]);
+        const result = await db.query(rawQuery, [req.params.place_id, req.body.description, req.body.username, req.body.userId, req.body.userAvatar]);
         res.status(200).send({
             status: 200,
             message: 'Post success',
-            data: null
+            data: result
         });
     } catch (ex) {
         res.status(500).send({
             status: 500,
-            message: ex.message
+            message: ex,
         })
     }
 }
