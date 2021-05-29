@@ -38,8 +38,8 @@ exports.getPostsByPlaceId = async (req, res) => {
 exports.createPost = async (req, res) => {
 
     try {
-        const rawQuery = 'INSERT INTO `post` (`place_id`, `description`, `username`, `user_id`) VALUES (?, ?, ?, ?)';
-        await db.query(rawQuery, [req.params.placeId, req.body.description, req.body.username, req.body.userId]);
+        const rawQuery = 'INSERT INTO `post` (`place_id`, `description`, `username`, `user_id`, `user_avatar`) VALUES (?, ?, ?, ?, ?)';
+        await db.query(rawQuery, [req.params.placeId, req.body.description, req.body.username, req.body.userId, req.body.userAvatar]);
         res.status(200).send({
             status: 200,
             message: 'Post success',
